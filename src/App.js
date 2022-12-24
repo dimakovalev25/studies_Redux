@@ -56,9 +56,7 @@ function App() {
     return (
         <div className="App">
             Redux!
-            {/*<h1 id='counter'>Counter: 0</h1>*/}
-            {/*<button id='dec'>DEC</button>*/}
-            {/*<button id='inc'>INC</button>*/}
+
         </div>
     );
 }
