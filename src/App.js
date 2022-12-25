@@ -1,46 +1,41 @@
 import './App.css';
-import {createStore} from "redux";
+import {createStore, bindActionCreators} from "redux";
 
-import reducer from "./reducer";
-import {inc, dec, rnd} from "./actions";
+import * as actions from "./action/actions";
+import reducer from "./reducer/reducer";
+import Counter from "./components/Counter";
 
-
+import {Provider} from "react-redux";
 
 
 const store = createStore(reducer);
 const {dispatch, subscribe, getState} = store;
 
 const update = () => {
-    console.log(getState())
-    document.getElementById('counter').textContent = store.getState().value;
 }
 
-subscribe(update);
-
-const bindActionCreator = (creator, dispatch) => (...args) => {
-    dispatch(creator(...args));
-}
-
-const incDispatch = bindActionCreator(inc, dispatch);
-const decDispatch = bindActionCreator(dec, dispatch);
-const rndDispatch = bindActionCreator(rnd, dispatch);
-
-document.getElementById('inc').addEventListener('click', incDispatch);
-
-document.getElementById('dec').addEventListener('click', decDispatch);
-
-document.getElementById('rnd').addEventListener('click', () => {
-    const value = Math.floor(Math.random() * (5 - 1)) + 1;
-    rndDispatch(value);
-});
-
+subscribe(update)
+const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 
 function App() {
     return (
-        <div className="App">
-            Redux!
+        <Provider store={store}>
+            <div className="App">
+                Redux!
+                <Counter
+                    counter={getState().value}
+                    inc={inc}
+                    dec={dec}
+                    rnd={() => {
+                        const value=Math.floor(Math.random() * 10);
+                        rnd(value);
+                    }}
+                />
 
-        </div>
+
+            </div>
+        </Provider>
+
     );
 }
 
