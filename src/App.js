@@ -8,12 +8,11 @@ import Counter from "./components/Counter";
 import {Provider} from "react-redux";
 
 
-const store = createStore(reducer);
-const {dispatch, subscribe, getState} = store;
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
+const {dispatch, subscribe, getState} = store;
 const update = () => {
 }
-
 subscribe(update)
 const {inc, dec, rnd} = bindActionCreators(actions, dispatch);
 
